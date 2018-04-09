@@ -45,7 +45,7 @@ def pipes(func):
             filename=__file__,
             mode="exec")
 
-        # and execute the definition in the original context,
+        # and execute the definition in the original context
         exec(code, ctx)
 
     # return the modified function - original is never called
