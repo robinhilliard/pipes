@@ -23,7 +23,7 @@ This library provides a function decorator that causes Python `>>` right shift o
 function to act exactly like Elixir pipes:
 
 ```$python
-from pipes import pipes
+from pipeop import pipes
 
 def add(a, b):
     return a + b
