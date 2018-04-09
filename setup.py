@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-version = '0.1.4'
+version = '0.1.5'
 
 setup(
   name='pipeop',
@@ -9,9 +9,10 @@ setup(
   description='A decorator that changes the >> operator to mimic Elixir-style function pipes',
   long_description=
   """
-  Within the decorated function a >> b(...) becomes b(a, ...):
-  
+  Within the decorated function ``a >> b(...)`` becomes ``b(a, ...)``:
  
+  ::
+  
       from pipeop import pipes
     
       def add3(a, b, c):
@@ -25,7 +26,7 @@ setup(
           print 1 >> add3(2, 3) >> times(3)  # prints 18
 
   """,
-  long_description_content_type='text/plain',
+  long_description_content_type='text/x-rst',
   author='Robin Hilliard',
   author_email='robin@rocketboots.com',
   license='MIT',
