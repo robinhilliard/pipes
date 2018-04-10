@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-version = '0.1.5'
+version = '0.1.6'
 
 setup(
   name='pipeop',
@@ -31,7 +31,7 @@ setup(
   author_email='robin@rocketboots.com',
   license='MIT',
   url='https://github.com/robinhilliard/pipes',
-  download_url='https://github.com/robinhilliard/pipes/blob/master/dist/pipeop-{}.tar.gz'.format(version),
+  download_url='https://github.com/robinhilliard/pipes/blob/master/dist/pipeop-{}.tar.gz?raw=true'.format(version),
   keywords='python elixir pipe',
   classifiers=[
     'Development Status :: 3 - Alpha',
