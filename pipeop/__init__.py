@@ -1,5 +1,6 @@
 from ast import parse, NodeTransformer, RShift, increment_lineno
 from inspect import getsource
+from textwrap import dedent
 
 
 class _PipeTransformer(NodeTransformer):
@@ -16,18 +17,18 @@ class _PipeTransformer(NodeTransformer):
 
 def pipes(func):
     # name of our replacement function
-    pipe_func_name = '__pipes_{}'.format(func.func_code.co_name)
+    pipe_func_name = '__pipes_{}'.format(func.__code__.co_name)
 
     # variable context where decorator added
-    ctx = func.func_globals
+    ctx = func.__globals__
 
     # We only modify the function once
     if pipe_func_name not in ctx:
         # AST data structure representing parsed function code
-        tree = parse(getsource(func))
+        tree = parse(dedent(getsource(func)))
 
         # Fix line numbers so that debuggers still work
-        increment_lineno(tree, func.func_code.co_firstlineno - 1)
+        increment_lineno(tree, func.__code__.co_firstlineno - 1)
 
         # Update name of function to compile
         tree.body[0].name = pipe_func_name
