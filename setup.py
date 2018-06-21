@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-version = '0.1.6'
+version = '0.1.7'
 
 setup(
   name='pipeop',
@@ -35,6 +35,7 @@ setup(
   keywords='python elixir pipe',
   classifiers=[
     'Development Status :: 3 - Alpha',
-    'Programming Language :: Python :: 2.7'
+    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3.6'
   ],
 )
