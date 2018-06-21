@@ -50,8 +50,8 @@ def calc()
 There should be a small amount of processing overhead the first time the function is called,
 otherwise there should be no difference to the conventionally nested call code.
 
-This is initial alpha code. It has been tested on Python 2.7.14 using simple functions. It has
-not been tested using bound methods or Python 3. Source line attributes are preserved so
-debuggers should be able to follow the code as it executes. Pull requests and bug reports gratefully accepted.
+This is initial alpha code. It has been tested on Python 2.7.14 and 3.6.5 using simple functions.
+Source line attributes are preserved so debuggers should be able to follow the code as it
+executes. Pull requests and bug reports gratefully accepted.
 
 Robin Hilliard
