@@ -9,9 +9,7 @@ setup(
   name='pipeop',
   packages=['pipeop'],
   version=version,
-  description="""
-  A decorator that changes the >> operator 
-  to mimic Elixir-style function pipes""",
+  description="A decorator that changes the >> and << operators to mimic Elixir-style function pipes",
   long_description=long_description,
   long_description_content_type='text/x-rst',
   author='Robin Hilliard',
