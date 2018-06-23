@@ -54,7 +54,7 @@ arguments of the right operand:
 
 ```$python
 @pipes
-def pow(a, b):
+def my_pow(a, b):
   print 2 << pow(3)  # prints 9
 ```
 

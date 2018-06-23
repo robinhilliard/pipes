@@ -43,7 +43,7 @@ reason I've also redefined the left shift operator to append it's left operand t
 arguments of the right operand::
 
     @pipes
-    def pow(a, b):
+    def my_pow(a, b):
       print 2 << pow(3)  # prints 9
 
 Finally you can drop the braces for functions with a single argument::
