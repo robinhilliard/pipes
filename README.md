@@ -47,6 +47,25 @@ def calc()
     print 1 >> add3(2, 3)  # prints 6
 ```
 
+In Elixir the first argument of a function is chosen with pipes in mind but this is (obviously) not the
+case in Python — for instance the enumerable args of `map` and `reduce` are in last position. For this
+reason I've also redefined the left shift operator to append it's left operand to the list of call 
+arguments of the right operand:
+
+```$python
+@pipes
+def pow(a, b):
+  print 2 << pow(3)  # prints 9
+```
+
+Finally you can drop the braces for functions with a single argument:
+
+```$python
+    @pipes
+    def sum(self):
+        print [1, 2, 3] >> sum  # prints 6
+```
+
 There should be a small amount of processing overhead the first time the function is called,
 otherwise there should be no difference to the conventionally nested call code.
 
@@ -55,3 +74,5 @@ Source line attributes are preserved so debuggers should be able to follow the c
 executes. Pull requests and bug reports gratefully accepted.
 
 Robin Hilliard
+
+_PS: Thanks for @Stvad for submitting the first issue with some great suggestions._
