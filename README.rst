@@ -39,7 +39,7 @@ Functions can have any number of arguments::
 
 In Elixir libraries the first argument of a function is chosen with pipes in mind but this is (obviously) not the
 case in Python — for instance the enumerable args of ``map`` and ``reduce`` are in last position. For this
-reason I've also redefined the left shift operator ``<<`` to append it's left operand to the list of call
+reason I've also redefined the left shift operator ``<<`` to *append* it's left operand to the list of call
 arguments of the right operand::
 
     @pipes
