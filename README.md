@@ -47,9 +47,9 @@ def calc()
     print 1 >> add3(2, 3)  # prints 6
 ```
 
-In Elixir the first argument of a function is chosen with pipes in mind but this is (obviously) not the
+In Elixir libraries the first argument of a function is chosen with pipes in mind but this is (obviously) not the
 case in Python — for instance the enumerable args of `map` and `reduce` are in last position. For this
-reason I've also redefined the left shift operator to append it's left operand to the list of call 
+reason I've also redefined the left shift operator `<<` to append it's left operand to the list of call 
 arguments of the right operand:
 
 ```$python
