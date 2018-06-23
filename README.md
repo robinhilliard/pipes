@@ -75,4 +75,4 @@ executes. Pull requests and bug reports gratefully accepted.
 
 Robin Hilliard
 
-_PS: Thanks for @Stvad for submitting the first issue with some great suggestions._
+_PS: Thanks to https://github.com/Stvad for submitting the first issue with some great suggestions._
