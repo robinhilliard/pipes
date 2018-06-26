@@ -10,7 +10,7 @@ class _PipeTransformer(NodeTransformer):
         if isinstance(node.op, (LShift, RShift)):
             # Bare function name
             if isinstance(node.right, Name):
-                return Call(
+                return self.visit(Call(
                     func=node.right,
                     args=[node.left],
                     keywords=[],
@@ -18,7 +18,7 @@ class _PipeTransformer(NodeTransformer):
                     kwargs=None,
                     lineno=node.right.lineno,
                     col_offset=node.right.col_offset
-                )
+                ))
             else:
                 # Rewrite a >> b(...) as b(a, ...)
                 node.right.args.insert(
