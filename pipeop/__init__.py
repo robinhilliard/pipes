@@ -74,9 +74,13 @@ def pipes(func_or_cache_flag=True):
 
     if callable(func_or_cache_flag):
         # No arguments passed to @pipes so we received the function to wrap
+        # Pass function to the decorator to check for recompile and return
+        # modified function
         return pipes_decorator(func_or_cache_flag)
 
     else:
-        # Cache argument was passed to @pipes, so return decorator, which
-        # is in a closure with func_or_cache_flag set to True or False
+        # Cache argument was passed to @pipes, so return decorator function
+        # reference. The function was defined in a closure with func_or_cache
+        # flag being used as a cache flag set to True or False, so it can
+        # access the flag and still be passed the function when it is called.
         return pipes_decorator
