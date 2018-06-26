@@ -51,7 +51,10 @@ def pipes(func_or_cache_flag=True):
             tree.body[0].name = pipe_func_name
 
             # remove the pipe decorator so that we don't recursively
-            # call it again
+            # call it again. The AST node for the decorator will be a
+            # Call if it had braces, and a Name if it had no braces.
+            # The location of the decorator function name in these
+            # nodes is slightly different.
             tree.body[0].decorator_list = \
                 [d for d in tree.body[0].decorator_list
                  if isinstance(d, Call) and d.func.id != 'pipes'
