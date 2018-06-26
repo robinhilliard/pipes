@@ -10,10 +10,6 @@ def add3(a, b, c):
     return a + b + c
 
 
-def inc(x):
-    return x + 1
-
-
 class PipeOpTestCase(unittest.TestCase):
 
     @pipes
@@ -52,7 +48,7 @@ class PipeOpTestCase(unittest.TestCase):
     def test_multiline(self):
         assert (
             range(-5, 0)
-            << map(inc)
+            << map(lambda x: x + 1)
             << map(abs)
             << map(str)
             >> tuple
