@@ -49,15 +49,17 @@ operand::
     print 2 >> pow(3)  # prints 8
     print 2 << pow(3)  # prints 9
 
-Finally you can drop the braces for functions with a single argument::
+You can drop the braces for functions with a single argument::
 
     @pipes
     def sum(self):
         print [1, 2, 3] >> sum  # prints 6
 
-There should be a small amount of processing overhead the first time the
-function is called, otherwise there should be no difference to the
-conventionally nested call code.
+Normally there should be a small amount of processing overhead only the first time the
+function is called due to the function being recompiled and cached. If you call the
+decorator like this: ``@pipes(False)`` you can force a recompile, which may be useful
+if you are redefining an existing function in the shell. Otherwise there should be
+no difference to the performance of the conventionally nested call code.
 
 This is initial alpha code. It has been tested on Python 2.7.14 and 3.6.5 using
 simple functions. Source line attributes are preserved so debuggers should be
