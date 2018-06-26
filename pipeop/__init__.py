@@ -30,39 +30,53 @@ class _PipeTransformer(NodeTransformer):
             return node
 
 
-def pipes(func):
-    # name of our replacement function
-    pipe_func_name = '__pipes_{}'.format(func.__code__.co_name)
+def pipes(func_or_cache_flag=True):
 
-    # variable context where decorator added
-    ctx = func.__globals__
+    def pipes_decorator(func):
+        # name of our replacement function
+        pipe_func_name = '__pipes_{}'.format(func.__code__.co_name)
 
-    # We only modify the function once
-    if pipe_func_name not in ctx:
-        # AST data structure representing parsed function code
-        tree = parse(dedent(getsource(func)))
+        # variable context where decorator added
+        ctx = func.__globals__
 
-        # Fix line numbers so that debuggers still work
-        increment_lineno(tree, func.__code__.co_firstlineno - 1)
+        # We only modify the function once
+        if not func_or_cache_flag or pipe_func_name not in ctx:
+            # AST data structure representing parsed function code
+            tree = parse(dedent(getsource(func)))
 
-        # Update name of function to compile
-        tree.body[0].name = pipe_func_name
+            # Fix line numbers so that debuggers still work
+            increment_lineno(tree, func.__code__.co_firstlineno - 1)
 
-        # remove the pipe decorator so that we don't recursively call it again
-        tree.body[0].decorator_list = \
-            [d for d in tree.body[0].decorator_list if d.id != 'pipes']
+            # Update name of function to compile
+            tree.body[0].name = pipe_func_name
 
-        # Apply the visit_BinOp transformation
-        tree = _PipeTransformer().visit(tree)
+            # remove the pipe decorator so that we don't recursively
+            # call it again
+            tree.body[0].decorator_list = \
+                [d for d in tree.body[0].decorator_list
+                 if isinstance(d, Call) and d.func.id != 'pipes'
+                 or isinstance(d, Name) and d.id != 'pipes']
 
-        # now compile the AST into an altered function definition
-        code = compile(
-            tree,
-            filename=__file__,
-            mode="exec")
+            # Apply the visit_BinOp transformation
+            tree = _PipeTransformer().visit(tree)
 
-        # and execute the definition in the original context
-        exec(code, ctx)
+            # now compile the AST into an altered function definition
+            code = compile(
+                tree,
+                filename=__file__,
+                mode="exec")
 
-    # return the modified function - original is never called
-    return ctx[pipe_func_name]
+            # and execute the definition in the original context
+            exec(code, ctx)
+
+        # return the modified function - original is never called
+        return ctx[pipe_func_name]
+
+    if callable(func_or_cache_flag):
+        # No arguments passed to @pipes so we received the function to wrap
+        return pipes_decorator(func_or_cache_flag)
+
+    else:
+        # Cache argument was passed to @pipes, so return decorator, which
+        # is in a closure with func_or_cache_flag set to True or False
+        return pipes_decorator

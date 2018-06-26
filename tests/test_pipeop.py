@@ -35,3 +35,11 @@ class PipeOpTestCase(unittest.TestCase):
     @pipes
     def test_left_pipe_one_arg_no_braces(self):
         assert [1, 2, 3] << sum == 6
+
+    @pipes(True)
+    def test_explicit_cache(self):
+        pass
+
+    @pipes(False)
+    def test_no_cache(self):
+        assert [1, 2, 3] << sum == 6
