@@ -10,6 +10,10 @@ def add3(a, b, c):
     return a + b + c
 
 
+def inc(x):
+    return x + 1
+
+
 class PipeOpTestCase(unittest.TestCase):
 
     @pipes
@@ -43,3 +47,13 @@ class PipeOpTestCase(unittest.TestCase):
     @pipes(False)
     def test_no_cache(self):
         assert [1, 2, 3] << sum == 6
+
+    @pipes
+    def test_multiline(self):
+        assert (
+            range(-5, 0)
+            << map(inc)
+            << map(abs)
+            << map(str)
+            >> tuple
+        ) == ('4', '3', '2', '1', '0')
