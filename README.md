@@ -62,15 +62,29 @@ def my_pow():
   print 2 << pow(3)  # prints 9
 ```
 
-You can drop the braces for functions with a single argument:
+You can drop the braces for functions or lambdas (enclosed in braces) with a single argument:
 
 ```$python
-    @pipes
-    def sum(self):
-        print [1, 2, 3] >> sum  # prints 6
+@pipes
+def sum(self):
+    print [1, 2, 3] >> sum  # prints 6
+    print 1 >> (lambda x: x + 1)  # prints 2
 ```
 
-Normally there should be a small amount of processing overhead only the first time the
+In Elixir pipes are often laid out one per line. In Python you need brackets to do the
+same thing without line continuations, but it still looks pretty neat:
+
+```$python
+print (
+    range(-5, 0)
+    << map(lambda x: x + 1)
+    << map(abs)
+    << map(str)
+    >> tuple
+)  # prints ('4', '3', '2', '1', '0')
+```
+
+Normally there should be a small amount of processing overhead on the first time the
 function is called due to the function being recompiled and cached. If you call the
 decorator like this: `@pipes(False)` you can force a recompile, which may be useful
 if you are redefining an existing function in the shell. Otherwise there should be
