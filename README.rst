@@ -45,6 +45,7 @@ but last in Python. For this reason I've also redefined the left shift operator
 ``<<`` to *append* it's left operand to the list of call arguments of the right
 operand::
 
+  @pipes
   def my_pow():
     print 2 >> pow(3)  # prints 8
     print 2 << pow(3)  # prints 9
@@ -59,13 +60,15 @@ You can drop the braces for functions or lambdas (enclosed in braces) with a sin
 In Elixir pipes are often laid out one per line. In Python you need brackets to do the
 same thing without line continuations, but it still looks pretty neat::
 
-  print (
-      range(-5, 0)
-      << map(lambda x: x + 1)
-      << map(abs)
-      << map(str)
-      >> tuple
-  )  # prints ('4', '3', '2', '1', '0')
+  @pipes
+  def pretty_pipe():
+    print (
+        range(-5, 0)
+        << map(lambda x: x + 1)
+        << map(abs)
+        << map(str)
+        >> tuple
+    )  # prints ('4', '3', '2', '1', '0')
 
 Normally there should be a small amount of processing overhead on the first time the
 function is called due to the function being recompiled and cached. If you call the
