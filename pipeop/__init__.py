@@ -1,4 +1,4 @@
-from ast import Call, parse, Name, NodeTransformer, LShift, RShift, \
+from ast import Call, parse, Name, Lambda, NodeTransformer, LShift, RShift, \
     increment_lineno
 from inspect import getsource
 from textwrap import dedent
@@ -9,7 +9,7 @@ class _PipeTransformer(NodeTransformer):
     def visit_BinOp(self, node):
         if isinstance(node.op, (LShift, RShift)):
             # Bare function name
-            if isinstance(node.right, Name):
+            if isinstance(node.right, (Name, Lambda)):
                 return self.visit(Call(
                     func=node.right,
                     args=[node.left],

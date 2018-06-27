@@ -53,3 +53,7 @@ class PipeOpTestCase(unittest.TestCase):
             << map(str)
             >> tuple
         ) == ('4', '3', '2', '1', '0')
+
+    @pipes
+    def test_lambda_no_braces(self):
+        assert 5 << (lambda a: a**2) == 25
