@@ -8,7 +8,7 @@ class _PipeTransformer(NodeTransformer):
 
     def visit_BinOp(self, node):
         if isinstance(node.op, (LShift, RShift)):
-            # Bare function name
+            # Convert function name / lambda without braces into call
             if isinstance(node.right, (Name, Lambda)):
                 return self.visit(Call(
                     func=node.right,
