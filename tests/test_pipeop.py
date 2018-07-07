@@ -62,6 +62,10 @@ class PipeOpTestCase(unittest.TestCase):
         cup = ClassUsingPipes()
         assert cup.foo() == 256
 
+    def test_class_decorator(self):
+        cup = ClassUsingPipes2()
+        assert cup.foo() == 256
+
     @pipes
     def test_chaining(self):
         assert range(-5, 0) << map(abs) >> list == [5, 4, 3, 2, 1]
@@ -77,3 +81,15 @@ class ClassUsingPipes:
     @pipes
     def foo(self):
         return range(-2, 2) << map(abs) << sum << self.squared
+
+
+@pipes
+class ClassUsingPipes2(object):
+    def __init__(self):
+        pass
+
+    def squared(self, a):
+        return a >> pow(a)
+
+    def foo(self):
+        return range(-2, 2) << map(abs) << sum << self.squared >> add2(0)
