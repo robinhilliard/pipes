@@ -76,4 +76,4 @@ class ClassUsingPipes:
 
     @pipes
     def foo(self):
-        return range(-2, 2) << map(abs) << sum << self.squared()
+        return range(-2, 2) << map(abs) << sum << self.squared
