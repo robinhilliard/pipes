@@ -1,15 +1,13 @@
 """
-    Class decorator code based on
-    https://www.codementor.io/sheena/advanced-use-python-decorators-class-function-du107nxsv
+   Implement a @pipes decorator that converts the << and >> operators
+   to mimic Elixir-stype pipe operators.
 """
+
 
 from ast import Call, parse, Name, NodeTransformer, LShift, RShift, \
     increment_lineno
 from inspect import getsource, isclass, stack
 from textwrap import dedent
-
-
-
 
 
 class _PipeTransformer(NodeTransformer):
@@ -45,7 +43,7 @@ def pipes(func_or_cache_flag=True):
             decorated_name = '__pipes_class_{}'.format(
                 func_or_class.__name__)
 
-            first_line_number = 1  # TODO Can we introspect correct number?
+            first_line_number = 1  # TODO How to introspect correct number?
             ctx = stack()[2][0].f_locals
 
         else:
