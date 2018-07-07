@@ -1,6 +1,6 @@
 """
    Implement a @pipes decorator that converts the << and >> operators
-   to mimic Elixir-stype pipe operators.
+   to mimic Elixir pipes.
 """
 
 
