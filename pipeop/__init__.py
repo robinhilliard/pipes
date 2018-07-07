@@ -43,10 +43,10 @@ def pipes(func_or_cache_flag=True):
     def pipes_decorator(func_or_class):
         if isclass(func_or_class):
             decorated_name = '__pipes_class_{}'.format(
-                "DEBUG")
+                func_or_class.__name__)
 
             first_line_number = 1  # TODO Can we introspect correct number?
-            ctx = stack()[2][0].f_locals  # TODO Test if you can see module stuff
+            ctx = stack()[2][0].f_locals
 
         else:
             decorated_name = '__pipes_{}'.format(
