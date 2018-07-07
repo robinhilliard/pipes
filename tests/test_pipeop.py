@@ -57,3 +57,19 @@ class PipeOpTestCase(unittest.TestCase):
     @pipes
     def test_lambda_no_braces(self):
         assert 5 << (lambda a: a**2) == 25
+
+    def test_method_no_braces(self):
+        cup = ClassUsingPipes()
+        assert cup.foo() == 256
+
+
+class ClassUsingPipes:
+    def __init__(self):
+        pass
+
+    def squared(self, a):
+        return a ** a
+
+    @pipes
+    def foo(self):
+        return range(-2, 2) << map(abs) << sum << self.squared()
