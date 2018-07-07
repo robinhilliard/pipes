@@ -60,7 +60,7 @@ def pipes(func_or_cache_flag=True):
             # Fix line numbers so that debuggers still work
             increment_lineno(tree, first_line_number - 1)
 
-            # Update name of function to compile
+            # Update name of function or class to compile
             tree.body[0].name = decorated_name
 
             # remove the pipe decorator so that we don't recursively
@@ -76,7 +76,7 @@ def pipes(func_or_cache_flag=True):
             # Apply the visit_BinOp transformation
             tree = _PipeTransformer().visit(tree)
 
-            # now compile the AST into an altered function definition
+            # now compile the AST into an altered function or class definition
             code = compile(
                 tree,
                 filename=__file__,
@@ -85,18 +85,18 @@ def pipes(func_or_cache_flag=True):
             # and execute the definition in the original context
             exec(code, ctx)
 
-        # return the modified function - original is never called
+        # return the modified function or class - original is never called
         return ctx[decorated_name]
 
     if callable(func_or_cache_flag):
-        # No arguments passed to @pipes so we received the function to wrap
-        # Pass function to the decorator to check for recompile and return
-        # modified function
+        # No arguments passed to @pipes so we received the function or class to
+        # wrap. Pass function or class to the decorator to check for recompile
+        # and return modified function
         return pipes_decorator(func_or_cache_flag)
 
     else:
         # Cache argument was passed to @pipes, so return decorator function
-        # reference. The function was defined in a closure with func_or_cache
+        # reference. This function was defined in a closure with func_or_cache
         # flag being used as a cache flag set to True or False, so it can
         # access the flag and still be passed the function when it is called.
         return pipes_decorator
