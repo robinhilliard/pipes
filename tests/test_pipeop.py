@@ -62,6 +62,10 @@ class PipeOpTestCase(unittest.TestCase):
         cup = ClassUsingPipes()
         assert cup.foo() == 256
 
+    @pipes
+    def test_chaining(self):
+        assert range(-5, 0) << map(abs) >> list == [5, 4, 3, 2, 1]
+
 
 class ClassUsingPipes:
     def __init__(self):
