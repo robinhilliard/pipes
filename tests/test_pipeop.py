@@ -85,6 +85,9 @@ class ClassUsingPipes:
 
 @pipes
 class ClassUsingPipes2(object):
+
+    zero = 0
+
     def __init__(self):
         pass
 
@@ -92,4 +95,9 @@ class ClassUsingPipes2(object):
         return a >> pow(a)
 
     def foo(self):
-        return range(-2, 2) << map(abs) << sum << self.squared >> add2(0)
+        return (
+            range(-2, 2)
+            << map(abs)
+            << sum
+            << self.squared
+            >> add2(self.zero))
