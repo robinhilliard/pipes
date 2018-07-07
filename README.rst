@@ -70,8 +70,10 @@ same thing without line continuations, but it still looks pretty neat::
         >> tuple
     )  # prints ('4', '3', '2', '1', '0')
 
+The decorator can also be applied to a class to decorate all the methods in that class.
+
 Normally there should be a small amount of processing overhead on the first time the
-function is called due to the function being recompiled and cached. If you call the
+function is defined due to the function being recompiled. If you call the
 decorator like this: ``@pipes(False)`` you can force a recompile, which may be useful
 if you are redefining an existing function in the shell. Otherwise there should be
 no difference to the performance of the conventionally nested call code.
