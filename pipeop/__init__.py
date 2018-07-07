@@ -1,14 +1,22 @@
+"""
+    Class decorator code based on
+    https://www.codementor.io/sheena/advanced-use-python-decorators-class-function-du107nxsv
+"""
+
 from ast import Call, parse, Name, NodeTransformer, LShift, RShift, \
     increment_lineno
-from inspect import getsource
+from inspect import getsource, isclass, stack
 from textwrap import dedent
+
+
+
 
 
 class _PipeTransformer(NodeTransformer):
 
     def visit_BinOp(self, node):
         if isinstance(node.op, (LShift, RShift)):
-            # Convert function name / lambda without braces into call
+            # Convert function name / lambda etc without braces into call
             if not isinstance(node.right, Call):
                 return self.visit(Call(
                     func=node.right,
@@ -32,23 +40,30 @@ class _PipeTransformer(NodeTransformer):
 
 def pipes(func_or_cache_flag=True):
 
-    def pipes_decorator(func):
-        # name of our replacement function
-        pipe_func_name = '__pipes_{}'.format(func.__code__.co_name)
+    def pipes_decorator(func_or_class):
+        if isclass(func_or_class):
+            decorated_name = '__pipes_class_{}'.format(
+                "DEBUG")
 
-        # variable context where decorator added
-        ctx = func.__globals__
+            first_line_number = 1  # TODO Can we introspect correct number?
+            ctx = stack()[2][0].f_locals  # TODO Test if you can see module stuff
+
+        else:
+            decorated_name = '__pipes_{}'.format(
+                func_or_class.__code__.co_name)
+            first_line_number = func_or_class.__code__.co_firstlineno
+            ctx = func_or_class.__globals__
 
         # We only modify the function once
-        if not func_or_cache_flag or pipe_func_name not in ctx:
+        if not func_or_cache_flag or decorated_name not in ctx:
             # AST data structure representing parsed function code
-            tree = parse(dedent(getsource(func)))
+            tree = parse(dedent(getsource(func_or_class)))
 
             # Fix line numbers so that debuggers still work
-            increment_lineno(tree, func.__code__.co_firstlineno - 1)
+            increment_lineno(tree, first_line_number - 1)
 
             # Update name of function to compile
-            tree.body[0].name = pipe_func_name
+            tree.body[0].name = decorated_name
 
             # remove the pipe decorator so that we don't recursively
             # call it again. The AST node for the decorator will be a
@@ -73,7 +88,7 @@ def pipes(func_or_cache_flag=True):
             exec(code, ctx)
 
         # return the modified function - original is never called
-        return ctx[pipe_func_name]
+        return ctx[decorated_name]
 
     if callable(func_or_cache_flag):
         # No arguments passed to @pipes so we received the function to wrap
