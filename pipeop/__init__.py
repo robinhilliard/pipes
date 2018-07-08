@@ -52,7 +52,8 @@ def pipes(func_or_cache_flag=True):
             first_line_number = func_or_class.__code__.co_firstlineno
             ctx = func_or_class.__globals__
 
-        # We only modify the function once
+        # Check to see the decorated function isn't already created
+        # It shouldn't be, but it doesn't hurt to check
         if not func_or_cache_flag or decorated_name not in ctx:
             # AST data structure representing parsed function code
             tree = parse(dedent(getsource(func_or_class)))
@@ -82,7 +83,8 @@ def pipes(func_or_cache_flag=True):
                 filename=__file__,
                 mode="exec")
 
-            # and execute the definition in the original context
+            # and execute the definition in the original context so that the
+            # decorated function can access the same scopes as the original
             exec(code, ctx)
 
         # return the modified function or class - original is never called
@@ -96,7 +98,7 @@ def pipes(func_or_cache_flag=True):
 
     else:
         # Cache argument was passed to @pipes, so return decorator function
-        # reference. This function was defined in a closure with func_or_cache
-        # flag being used as a cache flag set to True or False, so it can
+        # reference. pipes_decorator was defined in a closure with func_or
+        # cache flag being used as a cache flag set to True or False, so it can
         # access the flag and still be passed the function when it is called.
         return pipes_decorator
