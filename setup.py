@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 
-version = '0.2.3'
+version = '0.2.4'
 
 
 setup(
@@ -10,8 +10,6 @@ setup(
     version=version,
     description="A decorator that changes the >> and << operators to mimic Elixir-style function pipes",
     long_description=open('README.rst').read(),
-    long_description_content_type='text/x-rst',
-    include_package_data=True,
     package_data={'': ['README.rst']},
     author='Robin Hilliard',
     author_email='robin@rocketboots.com',
