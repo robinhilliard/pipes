@@ -43,14 +43,15 @@ def pipes(func_or_cache_flag=True):
             decorated_name = '__pipes_class_{}'.format(
                 func_or_class.__name__)
 
-            first_line_number = 1  # TODO How to introspect correct number?
-            ctx = stack()[2][0].f_locals
-
+            decorator_frame = stack()[2]
+            ctx = decorator_frame[0].f_locals
+            first_line_number = decorator_frame[2]
         else:
             decorated_name = '__pipes_{}'.format(
                 func_or_class.__code__.co_name)
-            first_line_number = func_or_class.__code__.co_firstlineno
+
             ctx = func_or_class.__globals__
+            first_line_number = func_or_class.__code__.co_firstlineno
 
         # Check to see the decorated function isn't already created
         # It shouldn't be, but it doesn't hurt to check
