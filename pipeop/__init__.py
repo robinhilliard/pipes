@@ -79,7 +79,7 @@ def pipes(func_or_class):
     # now compile the AST into an altered function or class definition
     code = compile(
         tree,
-        filename=ctx['__file__'],
+        filename=(ctx['__file__'] if '__file__' in ctx else "repl"),
         mode="exec")
 
     # and execute the definition in the original context so that the
