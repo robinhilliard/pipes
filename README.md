@@ -33,7 +33,7 @@ def times(a, b):
     return a * b
     
 @pipes
-def calc()
+def calc():
     print 1 >> add(2) >> times(3)  # prints 9
 ``` 
 
@@ -44,7 +44,7 @@ def add3(a, b, c):
     return a + b + c
     
 @pipes
-def calc()
+def calc():
     print 1 >> add3(2, 3)  # prints 6
 ```
 
